@@ -1,0 +1,7 @@
+{
+  "deno.enable": true,
+  "deno.unstable": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "axetroy.vscode-deno",
+  },
+}
