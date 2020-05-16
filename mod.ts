@@ -1,8 +1,26 @@
-import { log, BufReader, TextProtoReader, parse } from "./deps.ts";
+import { BufReader, Kia, TextProtoReader, log, parse } from "./deps.ts";
 
 const parsedArgs = parse(Deno.args.slice(0));
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
+const spinner = new Kia({
+  color: 'cyan',
+  spinner: {
+    frames: [
+      '[╴  ]',
+      '[╼  ]',
+      '[ ╸ ]',
+      '[  ╺]',
+      // '[   ]', TODO
+      '[  ╾]',
+      '[ ╺ ]',
+      '[╺  ]',
+      // '[   ]', TODO
+    ],
+    interval: 120,
+  },
+})
+// ╴	╵	╶	╷	╸	╹	╺	╻	╼	╽	╾
 
 let links: Array<string> = [];
 let history: Array<string> = [];
@@ -88,7 +106,8 @@ while (true) {
   // Parse url the awkward way
   const parsedUrl = new URL(url.replace("gemini://", "https://"));
 
-  log.info(`Connecting to <${parsedUrl.hostname}>`);
+  await spinner.set({ text: `Connecting to <${parsedUrl.hostname}>` })
+  await spinner.start()
 
   const connection = await Deno.connectTls(
     { hostname: parsedUrl.hostname, port: 1965 },
@@ -100,6 +119,8 @@ while (true) {
   const responseHeader = await reader.readString("\n");
   const [status, meta] = (responseHeader || "4 ").split(/\s/);
   const statusCode = Number(status.substr(0, 1));
+
+  await spinner.stop()
 
   switch (statusCode) {
     case 1:
