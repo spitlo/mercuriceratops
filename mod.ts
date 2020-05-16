@@ -81,6 +81,11 @@ if (parsedArgs.w || parsedArgs.width) {
   }
 }
 
+function getHostname(url: string = ""): string {
+  const parsedUrl = new URL(url.replace("gemini://", "https://"));
+  return parsedUrl.hostname;
+}
+
 while (true) {
   if (!url) {
     const tpr = new TextProtoReader(new BufReader(Deno.stdin));
@@ -133,14 +138,14 @@ while (true) {
     url = "";
     continue;
   }
-  // Parse url the awkward way
-  const parsedUrl = new URL(url.replace("gemini://", "https://"));
 
-  await spinner.set({ text: `Connecting to <${parsedUrl.hostname}>` });
+  const hostname = getHostname(url);
+
+  await spinner.set({ text: `Connecting to <${hostname}>` });
   await spinner.start();
 
   const connection = await Deno.connectTls(
-    { hostname: parsedUrl.hostname, port: 1965 },
+    { hostname, port: 1965 },
   );
 
   await connection.write(encoder.encode(`${url}\r\n`));
@@ -190,7 +195,13 @@ while (true) {
             // If no protocol, assume relative link and add current hostname
             // TODO: This is a very naive implementation, fix it
             if (!link.includes("://")) {
-              link = `${url}${link}`;
+              if (link.substring(0, 1) === "/") {
+                link = `gemini://${getHostname(url)}${link}`;
+              } else {
+                link = `${url}${link}`;
+              }
+              // Remove any double slashes except for ://
+              link = link.replace(/(?<!:)\/\//g, "/");
             }
             links.push(link);
             const linkLabel = lineParts.length === 1
