@@ -7,6 +7,7 @@ import {
   parse,
   underline,
 } from "./deps.ts";
+import wordWrap from "./utils/wordWrap.ts";
 
 const parsedArgs = parse(Deno.args.slice(0));
 const encoder = new TextEncoder();
@@ -40,6 +41,7 @@ let history: Array<string> = [];
 
 let url: string;
 let dump = false;
+let width: number | boolean = false;
 
 const helpText = `
 USAGE:
@@ -53,6 +55,8 @@ OPTIONS:
       Prints help
   -d, --dump
       Prints document body and exits
+  -w, --width <number>
+      Wraps text at <number> columns
 `;
 
 if (parsedArgs.h || parsedArgs.help) {
@@ -64,6 +68,17 @@ if (parsedArgs.h || parsedArgs.help) {
 
 if (parsedArgs.d || parsedArgs.dump) {
   dump = true;
+}
+
+if (parsedArgs.w || parsedArgs.width) {
+  // Ok, time to use a helper for this stuff?
+  if (Number.isInteger(Number(parsedArgs.w))) {
+    width = Number(parsedArgs.w);
+  } else if (
+    Number.isInteger(Number(parsedArgs.width))
+  ) {
+    width = Number(parsedArgs.width);
+  }
 }
 
 while (true) {
@@ -198,7 +213,12 @@ while (true) {
               );
             }
           } else {
-            console.log(line);
+            // This is ordinary text. If user has set a width, apply it
+            if (width) {
+              console.log(wordWrap(line, width));
+            } else {
+              console.log(line);
+            }
           }
         }
       } else {

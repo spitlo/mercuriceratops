@@ -31,4 +31,6 @@ To follow a link, enter the number and press enter.
           Prints help end exits
   -d, --dump
           Prints document body and exits
+  -w, --width <number>
+      Wraps text at <number> columns
 ```
