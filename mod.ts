@@ -2,6 +2,7 @@ import {
   BufReader,
   Kia,
   TextProtoReader,
+  bold,
   inverse,
   log,
   parse,
@@ -187,6 +188,20 @@ while (true) {
             pre = !pre;
           } else if (pre) {
             console.log(line);
+          } else if (line.startsWith("# ")) {
+            // Make H1 bold and underlined in interactive mode
+            if (dump) {
+              console.log(line);
+            } else {
+              console.log(bold(underline(line.substring(2).trim())));
+            }
+          } else if (line.startsWith("## ")) {
+            // Make H2 bold in interactive mode
+            if (dump) {
+              console.log(line);
+            } else {
+              console.log(bold(line.substring(3).trim()));
+            }
           } else if (line.startsWith("=>")) {
             line = line.substring(2).trim();
             const lineParts = line.split(/\s/);
