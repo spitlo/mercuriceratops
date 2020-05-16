@@ -131,7 +131,7 @@ while (true) {
   if (url.substr(0, 7) !== "gemini:") {
     log.warning("Only Gemini links, sorry");
     url = "";
-    break;
+    continue;
   }
   // Parse url the awkward way
   const parsedUrl = new URL(url.replace("gemini://", "https://"));
@@ -200,7 +200,7 @@ while (true) {
               // This is a dump, output as markdown
               if (linkLabel === link) {
                 // No link label, output as plain link
-                console.log(`<link>`);
+                console.log(`<${link}>`);
               } else {
                 // Link label
                 console.log(`[${linkLabel}](${link})`);
@@ -225,11 +225,14 @@ while (true) {
         // Something else, just print it
         console.log(body);
       }
-      history.push(url);
-      url = "";
 
+      // If dump is reuested, we’re done. Exit successfully
       if (dump) {
         Deno.exit();
       }
+
+      // Save url in history and clear it for the next iteration
+      history.push(url);
+      url = "";
   }
 }
