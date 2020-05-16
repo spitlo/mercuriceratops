@@ -3,35 +3,48 @@ import { BufReader, Kia, TextProtoReader, log, parse } from "./deps.ts";
 const parsedArgs = parse(Deno.args.slice(0));
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
-const spinner = new Kia({
-  color: 'cyan',
-  spinner: {
+const spinners = {
+  bounce: {
+    // TODO: Make this bounce a bit more
     frames: [
-      '[╴  ]',
-      '[╼  ]',
-      '[ ╸ ]',
-      '[  ╺]',
-      // '[   ]', TODO
-      '[  ╾]',
-      '[ ╺ ]',
-      '[╺  ]',
-      // '[   ]', TODO
+      "[╴  ]",
+      "[╼  ]",
+      "[ ╸ ]",
+      "[  ╺]",
+      "[  ╾]",
+      "[ ╺ ]",
+      "[╺  ]",
     ],
     interval: 120,
   },
-})
-// ╴	╵	╶	╷	╸	╹	╺	╻	╼	╽	╾
+  blink: {
+    frames: ["╌", "╍"],
+    interval: 400,
+  },
+};
+const spinner = new Kia({
+  color: "yellow",
+  spinner: spinners.bounce,
+});
 
 let links: Array<string> = [];
 let history: Array<string> = [];
 
 let url: string;
+let dump = false;
 
 const helpText = `
-Usage:
-mercuriceratops gemini://gemini.circumlunar.space/
-To go back, enter 'b' at the prompt. To quit, enter 'q'.
-To follow a link, enter the number and press enter.
+USAGE:
+  mercuriceratops gemini://gemini.circumlunar.space/
+
+  To go back, enter 'b' at the prompt. To quit, enter 'q'.
+  To follow a link, enter the number and press enter.
+
+OPTIONS:
+  -h, --help
+      Prints help
+  -d, --dump
+      Prints document body and exits
 `;
 
 if (parsedArgs.h || parsedArgs.help) {
@@ -41,6 +54,10 @@ if (parsedArgs.h || parsedArgs.help) {
   url = (parsedArgs._[0] || "").toString();
 }
 
+if (parsedArgs.d || parsedArgs.dump) {
+  dump = true;
+}
+
 while (true) {
   if (!url) {
     const tpr = new TextProtoReader(new BufReader(Deno.stdin));
@@ -48,14 +65,13 @@ while (true) {
     const line = await tpr.readLine();
     switch (line) {
       case "":
-        continue;
+        break;
       case "q":
         Deno.exit();
-        break;
       case "b":
         if (history.length < 2) {
           log.info("No history yet");
-          continue;
+          break;
         }
         url = history[history.length - 2];
         history = history.slice(1);
@@ -72,21 +88,12 @@ while (true) {
             linkNumber -= 1;
           }
           url = links[linkNumber];
-          // If no protocol, assume relative link and add current hostname
-          // This is a very naive implementation
-          if (!url.includes("://") && history.length > 0) {
-            let currentHost = history[history.length - 1];
-            const parsedCurrentHost = new URL(
-              currentHost.replace("gemini://", "https://"),
-            );
-            url = `gemini://${parsedCurrentHost.hostname}/${url}`;
-          }
           links = [];
         } else {
           // line is a url. TODO! Check if it’s valid
           if (!line) {
             log.error("Invalid url");
-            continue;
+            break;
           }
           url = line;
         }
@@ -101,13 +108,13 @@ while (true) {
   if (url.substr(0, 7) !== "gemini:") {
     log.warning("Only Gemini links, sorry");
     url = "";
-    continue;
+    break;
   }
   // Parse url the awkward way
   const parsedUrl = new URL(url.replace("gemini://", "https://"));
 
-  await spinner.set({ text: `Connecting to <${parsedUrl.hostname}>` })
-  await spinner.start()
+  await spinner.set({ text: `Connecting to <${parsedUrl.hostname}>` });
+  await spinner.start();
 
   const connection = await Deno.connectTls(
     { hostname: parsedUrl.hostname, port: 1965 },
@@ -120,7 +127,7 @@ while (true) {
   const [status, meta] = (responseHeader || "4 ").split(/\s/);
   const statusCode = Number(status.substr(0, 1));
 
-  await spinner.stop()
+  await spinner.stop();
 
   switch (statusCode) {
     case 1:
@@ -139,7 +146,7 @@ while (true) {
         log.warning(
           "Sorry, I can only handle text responses. Try a different url.",
         );
-        continue;
+        break;
       }
       const bodyBytes = await Deno.readAll(reader);
       const body = decoder.decode(bodyBytes);
@@ -156,11 +163,28 @@ while (true) {
             line = line.substring(2).trim();
             const lineParts = line.split(/\s/);
             // Assume the best
-            links.push(lineParts[0]);
+            let link = lineParts[0];
+            // If no protocol, assume relative link and add current hostname
+            // TODO: This is a very naive implementation, fix it
+            if (!link.includes("://")) {
+              link = `${url}${link}`;
+            }
+            links.push(link);
             const linkLabel = lineParts.length === 1
-              ? lineParts[0]
+              ? link
               : lineParts.slice(1).join(" ");
-            console.log(`[${links.length}] ${linkLabel}\n`);
+            if (dump) {
+              // This is a dump, output as markdown
+              if (linkLabel === link) {
+                // No link label, output as plain link
+                console.log(`<link>`);
+              } else {
+                // Link label
+                console.log(`[${linkLabel}](${link})`);
+              }
+            } else {
+              console.log(`[${links.length}] ${linkLabel}\n`);
+            }
           } else {
             console.log(line);
           }
@@ -171,5 +195,9 @@ while (true) {
       }
       history.push(url);
       url = "";
+
+      if (dump) {
+        Deno.exit();
+      }
   }
 }
