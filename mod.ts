@@ -1,4 +1,12 @@
-import { BufReader, Kia, TextProtoReader, log, parse } from "./deps.ts";
+import {
+  BufReader,
+  Kia,
+  TextProtoReader,
+  inverse,
+  log,
+  parse,
+  underline,
+} from "./deps.ts";
 
 const parsedArgs = parse(Deno.args.slice(0));
 const encoder = new TextEncoder();
@@ -183,7 +191,11 @@ while (true) {
                 console.log(`[${linkLabel}](${link})`);
               }
             } else {
-              console.log(`[${links.length}] ${linkLabel}\n`);
+              console.log(
+                `${
+                  underline(inverse(` ${links.length.toString()} `))
+                } ${linkLabel}\n`,
+              );
             }
           } else {
             console.log(line);
