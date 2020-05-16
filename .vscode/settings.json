@@ -1,4 +1,7 @@
 {
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": false,
+  "files.autoSave": "off",
   "deno.enable": true,
   "deno.unstable": false,
   "[typescript]": {
