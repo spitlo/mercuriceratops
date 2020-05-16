@@ -65,13 +65,13 @@ while (true) {
     const line = await tpr.readLine();
     switch (line) {
       case "":
-        break;
+        continue;
       case "q":
         Deno.exit();
       case "b":
         if (history.length < 2) {
           log.info("No history yet");
-          break;
+          continue;
         }
         url = history[history.length - 2];
         history = history.slice(1);
@@ -79,7 +79,7 @@ while (true) {
         break;
       case "f":
         log.info("Moving forward is not yet implemented, sorry :(");
-        break;
+        continue;
       default:
         if (Number.isInteger(Number(line))) {
           // This is a link
