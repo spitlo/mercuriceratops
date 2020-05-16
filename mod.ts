@@ -209,7 +209,7 @@ while (true) {
               console.log(
                 `${
                   underline(inverse(` ${links.length.toString()} `))
-                } ${linkLabel}\n`,
+                } ${linkLabel} (${link})\n`,
               );
             }
           } else {
