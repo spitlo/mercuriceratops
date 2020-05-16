@@ -193,7 +193,7 @@ while (true) {
             // Assume the best
             let link = lineParts[0];
             // If no protocol, assume relative link and add current hostname
-            // TODO: This is a very naive implementation, fix it
+            // TODO: This is a pretty naive implementation, fix it
             if (!link.includes("://")) {
               if (link.substring(0, 1) === "/") {
                 link = `gemini://${getHostname(url)}${link}`;
@@ -220,7 +220,7 @@ while (true) {
               console.log(
                 `${
                   underline(inverse(` ${links.length.toString()} `))
-                } ${linkLabel} (${link})\n`,
+                } ${linkLabel}${linkLabel === link ? "" : ` (${link})`}\n`,
               );
             }
           } else {
