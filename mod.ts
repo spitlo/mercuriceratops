@@ -32,16 +32,13 @@ const spinners = {
     interval: 400,
   },
 };
-const spinner = new Kia({
-  color: "yellow",
-  spinner: spinners.bounce,
-});
 
 let links: Array<string> = [];
 let history: Array<string> = [];
 
-let url: string;
 let dump = false;
+let spinner: any;
+let url: string;
 let width: number | boolean = false;
 
 const helpText = `
@@ -142,7 +139,11 @@ while (true) {
 
   const hostname = getHostname(url);
 
-  await spinner.set({ text: `Connecting to <${hostname}>` });
+  spinner = new Kia({
+    color: "yellow",
+    spinner: spinners.bounce,
+    text: `Connecting to <${hostname}>`,
+  });
   await spinner.start();
 
   const connection = await Deno.connectTls(
