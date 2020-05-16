@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -eu
+
+deno run --allow-net --quiet mod.ts $@

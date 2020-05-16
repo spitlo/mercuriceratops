@@ -8,14 +8,14 @@ To start client (assuming Deno is installed):
 
 ```bash
 $ cd mercuriceratops
-$ deno run --allow-net --quiet mod.ts
+$ ./mercuriceratops
 URL>
 ```
 
 You can also supply a URL directly:
 
 ```bash
-$ deno run --allow-net --quiet mod.ts gemini.circumlunar.space
+$ ./mercuriceratops gemini.circumlunar.space
 Connecting to <gemini.circumlunar.space>
 Following redirect to: gemini://gemini.circumlunar.space/
 Connecting to <gemini.circumlunar.space>
@@ -28,7 +28,7 @@ To follow a link, enter the number and press enter.
 
 ```
   -h, --help
-          Prints help
+          Prints help end exits
   -d, --dump
           Prints document body and exits
 ```
