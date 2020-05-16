@@ -101,7 +101,6 @@ while (true) {
         }
         url = history[history.length - 2];
         history = history.slice(1);
-        links = [];
         break;
       case "f":
         log.info("Moving forward is not yet implemented, sorry :(");
@@ -114,7 +113,6 @@ while (true) {
             linkNumber -= 1;
           }
           url = links[linkNumber];
-          links = [];
         } else {
           // line is a url. TODO! Check if it’s valid
           if (!line) {
@@ -128,6 +126,10 @@ while (true) {
   }
 
   // Check url
+  if (!url) {
+    log.warning("Couldn’t find that link, try again");
+    continue;
+  }
   if (!url.includes("://")) {
     url = `gemini://${url}`;
   }
@@ -163,23 +165,27 @@ while (true) {
     case 1:
     case 6:
       log.error("Sorry, the server requsted an unsupported feature.");
-      break;
+      url = "";
+      continue;
     case 3:
       log.info(`Following redirect to: ${meta}`);
       url = meta;
-      break;
+      continue;
     case 4:
       log.error("Error, sorry. Try again.");
-      break;
+      url = "";
+      continue;
     case 2:
       if (!meta.startsWith("text/")) {
         log.warning(
           "Sorry, I can only handle text responses. Try a different url.",
         );
-        break;
+        continue;
       }
       const bodyBytes = await Deno.readAll(reader);
       const body = decoder.decode(bodyBytes);
+
+      links = [];
 
       if (meta === "text/gemini") {
         // This is a gemini document
