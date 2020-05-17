@@ -12,11 +12,14 @@ import { parser } from "./utils/gemini.ts";
 const decoder = new TextDecoder();
 const encoder = new TextEncoder();
 
-let links: Array<string> = [];
-let history: Array<string> = [];
+// Use an arbitrary number for now, but perhaps check terminal height?
+const MAX_LINES = 50;
 
 let dump = false;
 let firstRun = true;
+let history: Array<string> = [];
+let links: Array<string> = [];
+let page = 0;
 let spinner: any;
 let url: string;
 let width: number = 0;
@@ -101,6 +104,8 @@ while (true) {
     }
   }
 
+  firstRun = false;
+
   // Check url
   if (!url) {
     log.warning("Couldn’t find that link, try again");
@@ -170,7 +175,34 @@ while (true) {
         if (dump) {
           console.log(plain.join("\n"));
         } else {
-          console.log(formatted.join("\n"));
+          if (formatted.length > MAX_LINES) {
+            while (page * MAX_LINES < formatted.length) {
+              for (let xx = page * MAX_LINES; xx <= MAX_LINES; xx++) {
+                console.log(formatted[xx]);
+              }
+              console.log("Page + 1", page + 1); /* eslint-disable-line */
+              console.log(
+                "Page + 1 * MAX_LINES",
+                (page + 1) * MAX_LINES,
+              ); /* eslint-disable-line */
+              console.log(
+                "formatted.length",
+                formatted.length,
+              ); /* eslint-disable-line */
+              if ((page + 1) * MAX_LINES < formatted.length) {
+                console.log(
+                  `---=== Page ${page}/${
+                    Math.floor(formatted.length / MAX_LINES)
+                  }. Press enter to continue ===---`,
+                );
+                await tpr.readLine();
+                page++;
+              }
+            }
+            page = 0;
+          } else {
+            console.log(formatted.join("\n"));
+          }
         }
       } else {
         // Something else, just print it
