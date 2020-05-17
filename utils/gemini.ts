@@ -1,6 +1,7 @@
 import {
   bold,
   inverse,
+  italic,
   underline,
 } from "../deps.ts";
 import { getHostname, wordWrap } from "./misc.ts";
@@ -31,11 +32,15 @@ export function parser(
       result.plain.push(line);
     } else if (line.startsWith("# ")) {
       // Make H1 bold and underlined in interactive mode
-      result.formatted.push(bold(underline(line.substring(2).trim())));
+      result.formatted.push(italic(underline(line.substring(2).trim())));
       result.plain.push(line);
     } else if (line.startsWith("## ")) {
       // Make H2 bold in interactive mode
-      result.formatted.push(bold(line.substring(3).trim()));
+      result.formatted.push("| " + bold(line.substring(3).trim()));
+      result.plain.push(line);
+    } else if (line.startsWith("### ")) {
+      // Make H3 italic in interactive mode
+      result.formatted.push(":: " + bold(line.substring(4).trim()));
       result.plain.push(line);
     } else if (line.startsWith("=>")) {
       line = line.substring(2).trim();

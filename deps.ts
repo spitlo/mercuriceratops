@@ -6,6 +6,7 @@ export { TextProtoReader } from "https://deno.land/std/textproto/mod.ts";
 export {
   bold,
   inverse,
+  italic,
   underline,
 } from "https://deno.land/std/fmt/colors.ts";
 export { parse } from "https://deno.land/std/flags/mod.ts";
