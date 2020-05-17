@@ -37,6 +37,8 @@ To follow a link, enter the number and press enter.
 
 ## Todo
 
-- [ ] Break out Gemini parser
+- [ ] Pagination
+- [ ] Fix "up" (../) links
+- [x] Break out Gemini parser
 - [ ] Add start page
 - [ ] Add more todos

@@ -8,7 +8,8 @@ import {
   parse,
   underline,
 } from "./deps.ts";
-import wordWrap from "./utils/wordWrap.ts";
+import { getHostname, wordWrap } from "./utils/misc.ts";
+import { parser } from "./utils/gemini.ts";
 import { yellow } from "https://deno.land/std/fmt/colors.ts";
 const parsedArgs = parse(Deno.args.slice(0));
 const encoder = new TextEncoder();
@@ -39,7 +40,7 @@ let history: Array<string> = [];
 let dump = false;
 let spinner: any;
 let url: string;
-let width: number | boolean = false;
+let width: number = 0;
 
 const helpText = `
 ${yellow("USAGE:")}
@@ -77,11 +78,6 @@ if (parsedArgs.w || parsedArgs.width) {
   ) {
     width = Number(parsedArgs.width);
   }
-}
-
-function getHostname(url: string = ""): string {
-  const parsedUrl = new URL(url.replace("gemini://", "https://"));
-  return parsedUrl.hostname;
 }
 
 while (true) {
@@ -185,74 +181,16 @@ while (true) {
       const bodyBytes = await Deno.readAll(reader);
       const body = decoder.decode(bodyBytes);
 
-      links = [];
+      console.log("\n");
 
       if (meta === "text/gemini") {
-        // This is a gemini document
-        let pre = false;
-        for (let line of body.split("\n")) {
-          if (line.startsWith("```")) {
-            pre = !pre;
-          } else if (pre) {
-            console.log(line);
-          } else if (line.startsWith("# ")) {
-            // Make H1 bold and underlined in interactive mode
-            if (dump) {
-              console.log(line);
-            } else {
-              console.log(bold(underline(line.substring(2).trim())));
-            }
-          } else if (line.startsWith("## ")) {
-            // Make H2 bold in interactive mode
-            if (dump) {
-              console.log(line);
-            } else {
-              console.log(bold(line.substring(3).trim()));
-            }
-          } else if (line.startsWith("=>")) {
-            line = line.substring(2).trim();
-            const lineParts = line.split(/\s/);
-            // Assume the best
-            let link = lineParts[0];
-            // If no protocol, assume relative link and add current hostname
-            // TODO: This is a pretty naive implementation, fix it
-            if (!link.includes("://")) {
-              if (link.substring(0, 1) === "/") {
-                link = `gemini://${getHostname(url)}${link}`;
-              } else {
-                link = `${url}${link}`;
-              }
-              // Remove any double slashes except for ://
-              link = link.replace(/(?<!:)\/\//g, "/");
-            }
-            links.push(link);
-            const linkLabel = lineParts.length === 1
-              ? link
-              : lineParts.slice(1).join(" ");
-            if (dump) {
-              // This is a dump, output as markdown
-              if (linkLabel === link) {
-                // No link label, output as plain link
-                console.log(`<${link}>`);
-              } else {
-                // Link label
-                console.log(`[${linkLabel}](${link})`);
-              }
-            } else {
-              console.log(
-                `${
-                  underline(inverse(` ${links.length.toString()} `))
-                } ${linkLabel}${linkLabel === link ? "" : ` (${link})`}\n`,
-              );
-            }
-          } else {
-            // This is ordinary text. If user has set a width, apply it
-            if (width) {
-              console.log(wordWrap(line, width));
-            } else {
-              console.log(line);
-            }
-          }
+        // This is a gemini document, parse it (get links, markdown)
+        let { bodyLinks, formatted, plain } = parser(body, url, width);
+        links = bodyLinks.slice(0);
+        if (dump) {
+          console.log(plain.join("\n"));
+        } else {
+          console.log(formatted.join("\n"));
         }
       } else {
         // Something else, just print it

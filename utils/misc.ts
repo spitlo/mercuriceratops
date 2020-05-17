@@ -4,8 +4,7 @@
  * Copyright (c) 2014-2017, Jon Schlinkert.
  * Released under the MIT License.
 */
-
-export default function wordWrap(text: string, width: number): string {
+export function wordWrap(text: string, width: number): string {
   // Perhaps this is a better regex? https://stackoverflow.com/a/51506718
   const zwsp = "\\s\u200B";
   const regexString = `.{1,${width}}([${zwsp}]+|$)|[^${zwsp}]+?([${zwsp}]+|$)`;
@@ -20,4 +19,9 @@ export default function wordWrap(text: string, width: number): string {
   }).join("\n");
 
   return result;
+}
+
+export function getHostname(url: string = ""): string {
+  const parsedUrl = new URL(url.replace("gemini://", "https://"));
+  return parsedUrl.hostname;
 }
