@@ -101,6 +101,8 @@ while (true) {
     }
   }
 
+  firstRun = false;
+
   // Check url
   if (!url) {
     log.warning("Couldn’t find that link, try again");
