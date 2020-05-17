@@ -34,3 +34,9 @@ To follow a link, enter the number and press enter.
   -w, --width <number>
           Wraps text at <number> columns
 ```
+
+## Todo
+
+- [ ] Break out Gemini parser
+- [ ] Add start page
+- [ ] Add more todos
