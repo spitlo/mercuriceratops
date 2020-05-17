@@ -47,6 +47,8 @@ export function parser(
       if (!link.includes("://")) {
         if (link.substring(0, 1) === "/") {
           link = `gemini://${getHostname(currentUrl)}${link}`;
+        } else if (link.substring(0, 1) == ".") {
+          link = `gemini://${getHostname(currentUrl)}/${link}`;
         } else {
           link = `${currentUrl}${link}`;
         }
