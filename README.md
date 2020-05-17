@@ -68,3 +68,4 @@ To follow a link, enter the number and press enter.
 - [x] Add start page
 - [ ] Add more todos
 - [x] Add search (gemini://gus.guru/)
+- [ ] Fix 'b', back works more like `cd -` now
