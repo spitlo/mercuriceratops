@@ -32,5 +32,5 @@ To follow a link, enter the number and press enter.
   -d, --dump
           Prints document body and exits
   -w, --width <number>
-      Wraps text at <number> columns
+          Wraps text at <number> columns
 ```

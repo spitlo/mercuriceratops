@@ -9,7 +9,7 @@ import {
   underline,
 } from "./deps.ts";
 import wordWrap from "./utils/wordWrap.ts";
-
+import { yellow } from "https://deno.land/std/fmt/colors.ts";
 const parsedArgs = parse(Deno.args.slice(0));
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -42,13 +42,13 @@ let url: string;
 let width: number | boolean = false;
 
 const helpText = `
-USAGE:
+${yellow("USAGE:")}
   mercuriceratops gemini://gemini.circumlunar.space/
 
   To go back, enter 'b' at the prompt. To quit, enter 'q'.
   To follow a link, enter the number and press enter.
 
-OPTIONS:
+${yellow("OPTIONS:")}
   -h, --help
       Prints help
   -d, --dump
