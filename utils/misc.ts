@@ -25,3 +25,23 @@ export function getHostname(url: string = ""): string {
   const parsedUrl = new URL(url.replace("gemini://", "https://"));
   return parsedUrl.hostname;
 }
+
+export const spinners = {
+  bounce: {
+    // TODO: Make this bounce a bit more
+    frames: [
+      "[╴  ]",
+      "[╼  ]",
+      "[ ╸ ]",
+      "[  ╺]",
+      "[  ╾]",
+      "[ ╺ ]",
+      "[╺  ]",
+    ],
+    interval: 120,
+  },
+  blink: {
+    frames: ["╌", "╍"],
+    interval: 400,
+  },
+};

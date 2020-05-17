@@ -2,62 +2,27 @@ import {
   BufReader,
   Kia,
   TextProtoReader,
-  bold,
-  inverse,
   log,
   parse,
-  underline,
 } from "./deps.ts";
-import { getHostname, wordWrap } from "./utils/misc.ts";
+import { getHostname, spinners } from "./utils/misc.ts";
+import { helpText, startText } from "./utils/texts.ts";
 import { parser } from "./utils/gemini.ts";
-import { yellow } from "https://deno.land/std/fmt/colors.ts";
-const parsedArgs = parse(Deno.args.slice(0));
-const encoder = new TextEncoder();
+
 const decoder = new TextDecoder();
-const spinners = {
-  bounce: {
-    // TODO: Make this bounce a bit more
-    frames: [
-      "[╴  ]",
-      "[╼  ]",
-      "[ ╸ ]",
-      "[  ╺]",
-      "[  ╾]",
-      "[ ╺ ]",
-      "[╺  ]",
-    ],
-    interval: 120,
-  },
-  blink: {
-    frames: ["╌", "╍"],
-    interval: 400,
-  },
-};
+const encoder = new TextEncoder();
 
 let links: Array<string> = [];
 let history: Array<string> = [];
 
 let dump = false;
+let firstRun = true;
 let spinner: any;
 let url: string;
 let width: number = 0;
 
-const helpText = `
-${yellow("USAGE:")}
-  mercuriceratops gemini://gemini.circumlunar.space/
-
-  To go back, enter 'b' at the prompt. To quit, enter 'q'.
-  To follow a link, enter the number and press enter.
-
-${yellow("OPTIONS:")}
-  -h, --help
-      Prints help
-  -d, --dump
-      Prints document body and exits
-  -w, --width <number>
-      Wraps text at <number> columns
-`;
-
+// Parse command line arguments
+const parsedArgs = parse(Deno.args.slice(0));
 if (parsedArgs.h || parsedArgs.help) {
   console.log(helpText);
   Deno.exit(1);
@@ -82,6 +47,12 @@ if (parsedArgs.w || parsedArgs.width) {
 
 while (true) {
   if (!url) {
+    // On first run in interactive mode, show a little message
+    if (firstRun && !dump) {
+      console.log(parser(startText, "", width).formatted.join("\n"));
+      firstRun = false;
+    }
+
     const tpr = new TextProtoReader(new BufReader(Deno.stdin));
     await Deno.stdout.write(encoder.encode("URL> "));
     const line = await tpr.readLine();

@@ -63,6 +63,7 @@ export function parser(
           underline(inverse(` ${result.bodyLinks.length.toString()} `))
         } ${linkLabel}${linkLabel === link ? "" : ` (${link})`}\n`,
       );
+
       if (linkLabel === link) {
         // No link label, output as plain link
         result.plain.push(`<${link}>`);

@@ -38,7 +38,9 @@ To follow a link, enter the number and press enter.
 ## Todo
 
 - [ ] Pagination
+- [ ] More/better styling in interactive mode
 - [ ] Fix "up" (../) links
 - [x] Break out Gemini parser
-- [ ] Add start page
+- [x] Add start page
 - [ ] Add more todos
+- [ ] Add search (gemini://gus.guru/)
