@@ -45,6 +45,9 @@ if (parsedArgs.w || parsedArgs.width) {
   }
 }
 
+const tpr = new TextProtoReader(new BufReader(Deno.stdin));
+let line: string | null;
+
 while (true) {
   if (!url) {
     // On first run in interactive mode, show a little message
@@ -53,9 +56,8 @@ while (true) {
       firstRun = false;
     }
 
-    const tpr = new TextProtoReader(new BufReader(Deno.stdin));
     await Deno.stdout.write(encoder.encode("URL> "));
-    const line = await tpr.readLine();
+    line = await tpr.readLine();
     switch (line) {
       case "":
         continue;
@@ -71,6 +73,13 @@ while (true) {
         break;
       case "f":
         log.info("Moving forward is not yet implemented, sorry :(");
+        continue;
+      case "s":
+        await Deno.stdout.write(encoder.encode("SEARCH> "));
+        const search = await tpr.readLine();
+        if (search) {
+          url = `gemini://gus.guru/search?${encodeURIComponent(search)}`;
+        }
         continue;
       default:
         if (Number.isInteger(Number(line))) {

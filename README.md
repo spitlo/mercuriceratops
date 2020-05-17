@@ -43,4 +43,4 @@ To follow a link, enter the number and press enter.
 - [x] Break out Gemini parser
 - [x] Add start page
 - [ ] Add more todos
-- [ ] Add search (gemini://gus.guru/)
+- [x] Add search (gemini://gus.guru/)
