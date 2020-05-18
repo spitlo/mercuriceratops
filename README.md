@@ -63,12 +63,15 @@ To follow a link, enter the link number and press enter.
 
 ## Todo
 
-- [ ] Pagination (?)
-- [ ] More/better styling in interactive mode
+- [ ] Pagination (?) [`feature/pagination`](../../tree/feature/pagination)
+- [x] More/better styling in interactive mode
 - [x] Fix "up" (../) links
 - [x] Break out Gemini parser
 - [x] Add start page
 - [x] Fix links start page
-- [ ] Add more todos
+- [x] Add more todos
 - [x] Add search (gemini://gus.guru/)
 - [ ] Fix 'b', back works more like `cd -` now
+- [ ] Handle downloads?
+- [ ] Handle http(s)?
+- [ ] Handle gopher?
