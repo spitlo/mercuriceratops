@@ -45,8 +45,10 @@ Following redirect to: gemini://gemini.circumlunar.space/
 Connecting to <gemini.circumlunar.space>
 ```
 
-To go back, enter `b` at the `URL>` prompt. To quit, enter `q`.
-To follow a link, enter the number and press enter.
+To visit a Gemini page, enter the URL at the URL> prompt.
+To go back, enter 'b' at the prompt. To quit, enter 'q'.
+To search using gus.guru, enter 's' and then enter your query at the SEARCH> prompt.
+To follow a link, enter the link number and press enter.
 
 ### Options
 
@@ -61,11 +63,12 @@ To follow a link, enter the number and press enter.
 
 ## Todo
 
-- [ ] Pagination
+- [ ] Pagination (?)
 - [ ] More/better styling in interactive mode
 - [x] Fix "up" (../) links
 - [x] Break out Gemini parser
 - [x] Add start page
+- [x] Fix links start page
 - [ ] Add more todos
 - [x] Add search (gemini://gus.guru/)
 - [ ] Fix 'b', back works more like `cd -` now

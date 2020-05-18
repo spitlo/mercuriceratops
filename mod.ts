@@ -50,9 +50,10 @@ let line: string | null;
 
 while (true) {
   if (!url) {
-    // On first run in interactive mode, show a little message
+    // On first run in interactive mode, show a little welcome message
     if (firstRun && !dump) {
       console.log(parser(startText, "", width).formatted.join("\n"));
+      links = parser(startText, "", width).bodyLinks;
       firstRun = false;
     }
 

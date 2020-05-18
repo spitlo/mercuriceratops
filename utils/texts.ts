@@ -7,7 +7,7 @@ ${yellow("USAGE:")}
   To visit a Gemini page, enter the URL at the URL> prompt.
   To go back, enter 'b' at the prompt. To quit, enter 'q'.
   To search using gus.guru, enter 's' and then enter your query at the SEARCH> prompt.
-  To follow a link, enter the number and press enter.
+  To follow a link, enter the link number and press enter.
 
 ${yellow("OPTIONS:")}
   -h, --help
