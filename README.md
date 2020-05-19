@@ -75,3 +75,9 @@ To follow a link, enter the link number and press enter.
 - [ ] Handle downloads?
 - [ ] Handle http(s)?
 - [ ] Handle gopher?
+
+---
+
+### Reference
+
+[Gemini specs](https://gemini.circumlunar.space/docs/spec-spec.txt)
