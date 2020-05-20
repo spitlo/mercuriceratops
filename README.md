@@ -45,7 +45,7 @@ Following redirect to: gemini://gemini.circumlunar.space/
 Connecting to <gemini.circumlunar.space>
 ```
 
-To visit a Gemini page, enter the URL at the ´URL>` prompt.
+To visit a Gemini page, enter the URL at the `URL>` prompt.
 To go back, enter 'b' at the prompt. To quit, enter 'q'.
 To search using gus.guru, enter 's' and then enter your query at the `SEARCH>` prompt.
 To follow a link, enter the link number and press enter.
