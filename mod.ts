@@ -2,8 +2,11 @@ import {
   BufReader,
   Kia,
   TextProtoReader,
+  blue,
+  magenta,
   log,
   parse,
+  yellow,
 } from "./deps.ts";
 import { getHostname, spinners } from "./utils/misc.ts";
 import { helpText, startText } from "./utils/texts.ts";
@@ -223,7 +226,11 @@ while (true) {
                 }
                 if (formatted.length > 0) {
                   console.log(
-                    `---=== Page ${page}/${pages}. Press enter to continue ===---`,
+                    blue(
+                      `---=== Page ${yellow(page.toString())}/${
+                        magenta(pages.toString())
+                      }. Press enter to continue ===---`,
+                    ),
                   );
                   await tpr.readLine();
                   page++;
