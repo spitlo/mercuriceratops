@@ -66,7 +66,7 @@ To follow a link, enter the link number and press enter.
 
 ## Todo
 
-- [ ] Pagination (?) [`feature/pagination`](../../tree/feature/pagination)
+- [x] Pagination
 - [x] More/better styling in interactive mode
 - [x] Fix "up" (../) links
 - [x] Break out Gemini parser
