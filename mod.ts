@@ -73,7 +73,7 @@ while (true) {
           continue;
         }
         url = history[history.length - 2];
-        history = history.slice(1);
+        history = history.slice(0, -1);
         break;
       case "f":
         log.info("Moving forward is not yet implemented, sorry :(");

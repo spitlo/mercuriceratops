@@ -68,13 +68,13 @@ To follow a link, enter the link number and press enter.
 - [x] Fix "up" (../) links
 - [x] Break out Gemini parser
 - [x] Add start page
-- [x] Fix links start page
+- [x] Fix links on start page
 - [x] Add more todos
 - [x] Add search (gemini://gus.guru/)
-- [ ] Fix 'b', back works more like `cd -` now
+- [x] Fix 'b', back works more like `cd -` now
+- [ ] Handle gopher?
 - [ ] Handle downloads?
 - [ ] Handle http(s)?
-- [ ] Handle gopher?
 
 ---
 
