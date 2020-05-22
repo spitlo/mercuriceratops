@@ -5,6 +5,11 @@
  * Released under the MIT License.
 */
 export function wordWrap(text: string, width: number): string[] {
+  // Only split text if it’s longer than requested width
+  if (!width || text.length < width) {
+    return [text];
+  }
+
   // Perhaps this is a better regex? https://stackoverflow.com/a/51506718
   const zwsp = "\\s\u200B";
   const regexString = `.{1,${width}}([${zwsp}]+|$)|[^${zwsp}]+?([${zwsp}]+|$)`;

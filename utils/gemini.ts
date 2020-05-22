@@ -89,11 +89,7 @@ export function parser(
     } else {
       // This is ordinary text. If user has set a width, apply it
       let output;
-      if (width) {
-        output = wordWrap(line, width);
-      } else {
-        output = [line];
-      }
+      output = wordWrap(line, width);
       result.formatted = [...result.formatted, ...output];
       result.plain = [...result.plain, ...output];
     }
