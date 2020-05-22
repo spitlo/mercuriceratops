@@ -1,4 +1,4 @@
-import { green, yellow } from "https://deno.land/std/fmt/colors.ts";
+import { green, cyan, yellow } from "https://deno.land/std/fmt/colors.ts";
 
 export const helpText = `
 ${yellow("USAGE:")}
@@ -7,7 +7,7 @@ ${yellow("USAGE:")}
   To visit a Gemini page, enter the URL at the URL> prompt.
   To go back, enter 'b' at the prompt. To quit, enter 'q'.
   To search using gus.guru, enter 's' and then enter your query at the SEARCH> prompt.
-  To follow a link, enter the number and press enter.
+  To follow a link, enter the link number and press enter.
 
 ${yellow("OPTIONS:")}
   -h, --help
@@ -18,33 +18,35 @@ ${yellow("OPTIONS:")}
       Wraps text at <number> columns
 `;
 
-export const mercuriceratops = `                            _____  _____
-                           /     \\\/     \\
-                          /  __  !!  __  \\
-                         <  ___  ||  ___  >
-                   .______\\\  __  !!  __  /______.
-                  /        \\\     ||     /        \\
-                 /      (O)=            =(O)      \\
-                |           \\\         /  .         |
-                |   .        /{}\`  ´{}\\\            |
-                |            \\\  o  o  /       .    |\\
-                |        .    \\\  {}  /             | \\´
-                |              \\\    /   .          |  \\´
-                 \\\   .          \\\  /              /\\\   \\´
-                  \\\       \\\      \\\/  .    /      /  \\\   \\´____,
-                  /        V----_____----V        \\\  \\\______/´
-                 |  ^ ^ ^ /               \\\ ^ ^ ^  |
-                 o o o o |                 | o o o o`;
+export const mascot = `                               _---_  _---_
+                              /     \\\/     \\
+                             /  __  !!  __  \\
+                            (  ___  ||  ___  )
+                       .__---\\\  __  !!  __  /---__.
+                     /        \\\   _ || _   /        \\
+                    /      (O)=     ..     =(O)      \\
+                   |-          \\\         /  .         |
+                   |   .        /{}\`  ´{}\\\            |
+                   |            \\\ c    c /       .    |\\
+                   |        .    \\\  {}  /             |-\\\´
+                   |_             \\\    /   .          |--\\\´
+                    \\\   .   V      \\\/\\7       7      /\\\---\\\´     ,
+                     \\\       \\\      \\\/  .    /      /  \\\---\\\´___/\\\,
+                     /__      V=---_____---=V    .  _\\\  \\\________/´
+                    |        /--¨         ¨--\\\        |
+    ..   .  ...   _/o^o^o^o^\`\\\_             _/´^o^o^o^o\\\_  .  ..${
+  cyan("spitlo 2020")
+}`;
 
-export const logo = `
- .  . ____ ____ ____ _  _ ____ _ ____ ____ ____ ____ ___ ____ ___  ______>
- |\\\/| |___ |__/ |    |  | |__/ | |    |___ |__/ |__|  |  |  | |__] [__
- L  L |___ L  \\\ |___ |__| L  \\\ | |___ |___ L  \\\ L  |  L  |__| L  _____]
-- -- ----- ---- ---------------------------- ---- -------------- ---- --- -`;
+export const logo =
+  ` __ .  . ____ ____ ____ _  _ ____ _ ____ ____ ____ ____ ___ ____ ___  ______>
+    |\\\/| |___ |__/ |    |  | |__/ | |    |___ |__/ |__|  |  |  | |__] [__
+    L  L |___ L  \\\ |___ |__| L  \\\ | |___ |___ L  \\\ L  |  L  |__| L  _____]
+ - -- ----- ---- ---------------------------- ---- -------------- -/-- --- - +`;
 
 export const startText = `
 \`\`\`
-${green(mercuriceratops)}
+${green(mascot)}
 ${yellow(logo)}
 \`\`\`
 

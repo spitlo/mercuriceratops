@@ -3,21 +3,21 @@
 ```text
                               _---_  _---_
                              /     \/     \
-                            /  __  !!  __  \
-                           (  ___  ||  ___  )
-                     .______\  __  !!  __  /______.
-                    /        \   _ || _   /        \
-                   /      (O)=     ..     =(O)      \
-                  |           \         /  .         |
-                  |   .        /{}`  ´{}\            |
-                  |            \  0  0  /       .    |\
-                  |        .    \  {}  /             | \´
-                  |              \    /   .          |  \´
-                   \   .   V      \/\7       7      /\   \´     ,
-                    \       \      \/  .    /      /  \   \´___/\,
-                    /        V----_____----V    .   \  \________/´
-                   |        /               \        |
-                 _/o^o^o^o^`\_             _/´^o^o^o^o\_
+                            /  __  !!  __  \                               x
+                           (  ___  ||  ___  )                             .
+                      .__---\  __  !!  __  /---__.                 .   .
+                    /        \   _ || _   /        \           .
+                   /      (O)=     ..     =(O)      \        .
+                  |-          \         /  .         |         .
+  (*)             |   .        /{}`  ´{}\            |       .
+    \  (-)        |            \ c    c /       .    |\   .
+     \V/          |        .    \  {}  /             |-\´
+     ´\           |_             \    /   .          |--\´
+      V            \   .   V      \/\7       7      /\---\´     ,
+  (+) |             \       \      \/  .    /      /  \---\´___/\,
+    \  (x)          /__      V=---_____---=V    .  _\  \________/´
+    ´\v/            |        /--¨       ¨--\        |
+   .. V .  ...    _/o^o^o^o^`\_           _/´^o^o^o^o\_   .  ..spitlo 2020
  __ .  . ____ ____ ____ _  _ ____ _ ____ ____ ____ ____ ___ ____ ___  ______>
     |\/| |___ |__/ |    |  | |__/ | |    |___ |__/ |__|  |  |  | |__] [__
     L  L |___ L  \ |___ |__| L  \ | |___ |___ L  \ L  |  L  |__| L  _____]
@@ -45,8 +45,10 @@ Following redirect to: gemini://gemini.circumlunar.space/
 Connecting to <gemini.circumlunar.space>
 ```
 
-To go back, enter `b` at the `URL>` prompt. To quit, enter `q`.
-To follow a link, enter the number and press enter.
+To visit a Gemini page, enter the URL at the ´URL>` prompt.
+To go back, enter 'b' at the prompt. To quit, enter 'q'.
+To search using gus.guru, enter 's' and then enter your query at the `SEARCH>` prompt.
+To follow a link, enter the link number and press enter.
 
 ### Options
 
@@ -61,10 +63,21 @@ To follow a link, enter the number and press enter.
 
 ## Todo
 
-- [ ] Pagination
-- [ ] More/better styling in interactive mode
+- [ ] Pagination (?) [`feature/pagination`](../../tree/feature/pagination)
+- [x] More/better styling in interactive mode
 - [x] Fix "up" (../) links
 - [x] Break out Gemini parser
 - [x] Add start page
-- [ ] Add more todos
+- [x] Fix links start page
+- [x] Add more todos
 - [x] Add search (gemini://gus.guru/)
+- [ ] Fix 'b', back works more like `cd -` now
+- [ ] Handle downloads?
+- [ ] Handle http(s)?
+- [ ] Handle gopher?
+
+---
+
+### Reference
+
+[Gemini specs](https://gemini.circumlunar.space/docs/spec-spec.txt)
