@@ -60,17 +60,25 @@ export function parser(
         // Remove any double slashes except for ://
         link = link.replace(/(?<!:)\/\//g, "/");
       }
+      // Add link to link array for access by index
       result.bodyLinks.push(link);
+      // If no link label is supplied, ue link as label
       const linkLabel = lineParts.length === 1
         ? link
         : lineParts.slice(1).join(" ");
-
       result.formatted.push(
         `${
           underline(inverse(` ${result.bodyLinks.length.toString()} `))
-        } ${linkLabel}${linkLabel === link ? "" : ` (${link})`}\n`,
+        } ${linkLabel}${
+          linkLabel === link
+            ? ""
+            : `${
+              4 + link.length + linkLabel.length > width ? "\n" : " "
+            }(${link})`
+        }\n`,
       );
 
+      // For "plain" text, output as markdown
       if (linkLabel === link) {
         // No link label, output as plain link
         result.plain.push(`<${link}>`);
@@ -84,10 +92,10 @@ export function parser(
       if (width) {
         output = wordWrap(line, width);
       } else {
-        output = line;
+        output = [line];
       }
-      result.formatted.push(output);
-      result.plain.push(output);
+      result.formatted = [...result.formatted, ...output];
+      result.plain = [...result.plain, ...output];
     }
   }
 

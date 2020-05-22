@@ -13,13 +13,15 @@ const decoder = new TextDecoder();
 const encoder = new TextEncoder();
 
 // Use an arbitrary number for now, but perhaps check terminal height?
-const MAX_LINES = 50;
+const DEFAULT_MAX_LINES = 50;
 
 let dump = false;
 let firstRun = true;
 let history: Array<string> = [];
 let links: Array<string> = [];
-let page = 0;
+let maxLines = DEFAULT_MAX_LINES;
+let page = 1;
+let paginate = false;
 let spinner: any;
 let url: string;
 let width: number = 0;
@@ -45,6 +47,18 @@ if (parsedArgs.w || parsedArgs.width) {
     Number.isInteger(Number(parsedArgs.width))
   ) {
     width = Number(parsedArgs.width);
+  }
+}
+
+if (parsedArgs.p || parsedArgs.paginate) {
+  // Really, really consider using a helper for this stuff.
+  paginate = true;
+  if (Number.isInteger(Number(parsedArgs.p))) {
+    maxLines = Number(parsedArgs.p);
+  } else if (
+    Number.isInteger(Number(parsedArgs.paginate))
+  ) {
+    maxLines = Number(parsedArgs.paginate);
   }
 }
 
@@ -174,35 +188,38 @@ while (true) {
         let { bodyLinks, formatted, plain } = parser(body, url, width);
         links = bodyLinks.slice(0);
         if (dump) {
+          // For dumps, dont mind the page length
           console.log(plain.join("\n"));
         } else {
-          if (formatted.length > MAX_LINES) {
-            while (page * MAX_LINES < formatted.length) {
-              for (let xx = page * MAX_LINES; xx <= MAX_LINES; xx++) {
-                console.log(formatted[xx]);
-              }
-              console.log("Page + 1", page + 1); /* eslint-disable-line */
-              console.log(
-                "Page + 1 * MAX_LINES",
-                (page + 1) * MAX_LINES,
-              ); /* eslint-disable-line */
-              console.log(
-                "formatted.length",
-                formatted.length,
-              ); /* eslint-disable-line */
-              if ((page + 1) * MAX_LINES < formatted.length) {
-                console.log(
-                  `---=== Page ${page}/${
-                    Math.floor(formatted.length / MAX_LINES)
-                  }. Press enter to continue ===---`,
-                );
-                await tpr.readLine();
-                page++;
-              }
-            }
-            page = 0;
-          } else {
+          if (!paginate) {
             console.log(formatted.join("\n"));
+          } else {
+            let pages = Math.floor(formatted.length / maxLines);
+            if (formatted.length < maxLines) {
+              // This page is shorter than max, just print it.
+              console.log(formatted.join("\n"));
+            } else {
+              // This is a long page and needs pagination.
+              while (formatted.length > 0) {
+                for (
+                  let xx = 0;
+                  xx <= maxLines;
+                  xx++
+                ) {
+                  if (formatted.length > 0) {
+                    console.log(formatted.shift());
+                  }
+                }
+                if (formatted.length > 0) {
+                  console.log(
+                    `---=== Page ${page}/${pages}. Press enter to continue ===---`,
+                  );
+                  await tpr.readLine();
+                  page++;
+                }
+              }
+              page = 1;
+            }
           }
         }
       } else {

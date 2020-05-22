@@ -16,6 +16,9 @@ ${yellow("OPTIONS:")}
       Prints document body and exits
   -w, --width <number>
       Wraps text at <number> columns
+  -p, --paginate <number>
+      Show <number> of rows at a time.
+      Defaults to 50 if no <number> is supplied.
 `;
 
 export const mascot = `                               _---_  _---_

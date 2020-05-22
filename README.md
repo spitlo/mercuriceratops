@@ -59,6 +59,9 @@ To follow a link, enter the link number and press enter.
           Prints document body and exits
   -w, --width <number>
           Wraps text at <number> columns
+  -p, --paginate <number>
+      Show <number> of rows at a time.
+      Defaults to 50 if no <number> is supplied
 ```
 
 ## Todo
