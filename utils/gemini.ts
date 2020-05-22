@@ -73,7 +73,7 @@ export function parser(
           linkLabel === link
             ? ""
             : `${
-              4 + link.length + linkLabel.length > width ? "\n" : " "
+              width && 4 + link.length + linkLabel.length > width ? "\n" : " "
             }(${link})`
         }\n`,
       );
