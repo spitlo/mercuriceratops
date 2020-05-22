@@ -76,6 +76,9 @@ To follow a link, enter the link number and press enter.
 - [x] Add search (gemini://gus.guru/)
 - [x] Fix 'b', back works more like `cd -` now
 - [ ] Word wrap for headers when width is set
+- [ ] Word wrap for link labels when width is set
+- [ ] Implement 'f', forward
+- [ ] Bookmarks?
 - [ ] Handle gopher?
 - [ ] Handle downloads?
 - [ ] Handle http(s)?
