@@ -14,49 +14,60 @@ const encoder = new TextEncoder();
 
 // Use an arbitrary number for now, but perhaps check terminal height?
 const DEFAULT_MAX_LINES = 50;
+const defaults: {
+  dump: boolean;
+  paginate: boolean | number;
+  width: number;
+} = {
+  dump: false,
+  paginate: false,
+  width: 0,
+};
 
-let dump = false;
+let { dump, paginate, width } = defaults;
+
 let firstRun = true;
 let history: Array<string> = [];
 let links: Array<string> = [];
 let maxLines = DEFAULT_MAX_LINES;
 let page = 1;
-let paginate = false;
 let spinner: any;
 let url: string;
-let width: number = 0;
 
 // Parse command line arguments
-const parsedArgs = parse(Deno.args.slice(0));
-if (parsedArgs.h || parsedArgs.help) {
+const parsedArgs = parse(Deno.args.slice(0), {
+  alias: {
+    dump: "d",
+    paginate: "p",
+    width: "w",
+  },
+  default: defaults,
+});
+
+if (parsedArgs.help) {
   console.log(helpText);
   Deno.exit(1);
 } else {
   url = (parsedArgs._[0] || "").toString();
 }
 
-if (parsedArgs.d || parsedArgs.dump) {
+if (parsedArgs.dump) {
   dump = true;
 }
 
-if (parsedArgs.w || parsedArgs.width) {
-  // Ok, time to use a helper for this stuff?
-  if (Number.isInteger(Number(parsedArgs.w))) {
-    width = Number(parsedArgs.w);
-  } else if (
+if (parsedArgs.width) {
+  if (
     Number.isInteger(Number(parsedArgs.width))
   ) {
     width = Number(parsedArgs.width);
   }
 }
 
-if (parsedArgs.p || parsedArgs.paginate) {
-  // Really, really consider using a helper for this stuff.
+if (parsedArgs.paginate) {
   paginate = true;
-  if (Number.isInteger(Number(parsedArgs.p))) {
-    maxLines = Number(parsedArgs.p);
-  } else if (
-    Number.isInteger(Number(parsedArgs.paginate))
+  if (
+    Number.isInteger(Number(parsedArgs.paginate)) &&
+    Number(parsedArgs.paginate) > 1
   ) {
     maxLines = Number(parsedArgs.paginate);
   }
