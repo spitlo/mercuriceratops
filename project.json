@@ -1,0 +1,8 @@
+{
+  "name": "merc",
+  "version": "0.9.9",
+  "replaceVersion": [
+    "README.md"
+  ],
+  "signGitTag": true
+}
