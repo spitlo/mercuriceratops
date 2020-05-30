@@ -28,18 +28,28 @@
 
 This is a very basic client for Gemini, inspired by the [100 LOC demos](https://tildegit.org/solderpunk) by solderpunk. Mainly to try Deno, but also to test the Gemini protocol.
 
-To start client (assuming Deno is installed):
+## Install
+
+Assuming Deno is installed and Deno bin is added to path:
+
+```bash
+$ deno install --allow-net -n merc https://denopkg.com/spitlo/mercuriceratops
+```
+
+## Run from source
+
+Assuming Deno is installed:
 
 ```bash
 $ cd mercuriceratops
-$ ./mercuriceratops
+$ ./merc
 URL>
 ```
 
 You can also supply a URL directly:
 
 ```bash
-$ ./mercuriceratops gemini.circumlunar.space
+$ ./merc gemini.circumlunar.space
 Connecting to <gemini.circumlunar.space>
 Following redirect to: gemini://gemini.circumlunar.space/
 Connecting to <gemini.circumlunar.space>
@@ -76,7 +86,7 @@ To follow a link, enter the link number and press enter.
 - [x] Add search (gemini://gus.guru/)
 - [x] Fix 'b', back works more like `cd -` now
 - [x] Clean up argument parsing
-- [ ] Deno install (`merc`?)
+- [x] Deno install (`merc`?)
 - [ ] Word wrap for headers when width is set
 - [ ] Word wrap for link labels when width is set
 - [ ] Implement 'f', forward
