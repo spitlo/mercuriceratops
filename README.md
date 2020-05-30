@@ -33,7 +33,7 @@ This is a very basic client for Gemini, inspired by the [100 LOC demos](https://
 Assuming Deno is installed and Deno bin is added to path:
 
 ```bash
-$ deno install --allow-net -n merc https://denopkg.com/spitlo/mercuriceratops@v1.2.0/cli.ts
+$ deno install --allow-net -n merc https://denopkg.com/spitlo/mercuriceratops@v1.2.1/cli.ts
 ```
 
 ## Run from source
