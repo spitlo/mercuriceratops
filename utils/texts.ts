@@ -1,8 +1,8 @@
-import { green, cyan, yellow } from "https://deno.land/std/fmt/colors.ts";
+import { green, cyan, yellow } from "../deps.ts";
 
 export const helpText = `
 ${yellow("USAGE:")}
-  ./mercuriceratops [URL]
+  merc [URL]
 
   To visit a Gemini page, enter the URL at the URL> prompt.
   To go back, enter 'b' at the prompt. To quit, enter 'q'.
