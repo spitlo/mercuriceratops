@@ -34,6 +34,7 @@ Assuming Deno is installed and Deno bin is added to path:
 
 ```bash
 $ deno install --allow-net -n merc https://denopkg.com/spitlo/mercuriceratops@v1.2.1/cli.ts
+$ merc gemini.circumlunar.space
 ```
 
 ## Run from source
