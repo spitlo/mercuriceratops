@@ -89,6 +89,7 @@ To follow a link, enter the link number and press enter.
 - [x] Clean up argument parsing
 - [x] Deno install (`merc`?)
 - [x] Lock dependency versions
+- [ ] Add to deno.land/x
 - [ ] Don’t fail catastrophically on cert errors
 - [ ] Word wrap for headers when width is set
 - [ ] Word wrap for link labels when width is set
