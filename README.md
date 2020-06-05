@@ -28,12 +28,12 @@
 
 This is a ~very~ pretty basic client for Gemini, inspired by the [100 LOC demos](https://tildegit.org/solderpunk) by solderpunk. Mainly to try Deno, but also to test the Gemini protocol.
 
-## Install
+## Install/update
 
 Assuming Deno is installed and Deno bin is added to path:
 
 ```bash
-$ deno install --allow-net -n merc https://denopkg.com/spitlo/mercuriceratops@v1.2.1/cli.ts
+$ deno install -f --allow-net -n merc https://deno.land/x/merc@v1.2.1/cli.ts
 $ merc
 URL>
 ```
@@ -93,7 +93,7 @@ Connecting to <gemini.circumlunar.space>
 - [x] Clean up argument parsing
 - [x] Deno install (`merc`?)
 - [x] Lock dependency versions
-- [ ] Add to deno.land/x
+- [x] Add to deno.land/x
 - [ ] Don’t fail catastrophically on cert errors
 - [ ] Word wrap for headers when width is set
 - [ ] Word wrap for link labels when width is set
