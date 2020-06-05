@@ -26,7 +26,7 @@
 
 ## A Gemini client written for Deno
 
-This is a very basic client for Gemini, inspired by the [100 LOC demos](https://tildegit.org/solderpunk) by solderpunk. Mainly to try Deno, but also to test the Gemini protocol.
+This is a ~very~ pretty basic client for Gemini, inspired by the [100 LOC demos](https://tildegit.org/solderpunk) by solderpunk. Mainly to try Deno, but also to test the Gemini protocol.
 
 ## Install
 
