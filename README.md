@@ -34,7 +34,8 @@ Assuming Deno is installed and Deno bin is added to path:
 
 ```bash
 $ deno install --allow-net -n merc https://denopkg.com/spitlo/mercuriceratops@v1.2.1/cli.ts
-$ merc gemini.circumlunar.space
+$ merc
+URL>
 ```
 
 ## Run from source
@@ -47,19 +48,22 @@ $ ./merc
 URL>
 ```
 
+## Usage
+
+To visit a Gemini page, enter the URL at the `URL>` prompt or start it with a URL as argument.
+Merc only handles Gemini links for now, and you can leave out the protocol part of the URL.
+To go back, enter 'b' at the prompt. To quit, enter 'q'.
+To search using gus.guru, enter 's' and then enter your query at the `SEARCH>` prompt.
+To follow a link, enter the link number and press enter.
+
 You can also supply a URL directly:
 
 ```bash
-$ ./merc gemini.circumlunar.space
+$ merc gemini.circumlunar.space
 Connecting to <gemini.circumlunar.space>
 Following redirect to: gemini://gemini.circumlunar.space/
 Connecting to <gemini.circumlunar.space>
 ```
-
-To visit a Gemini page, enter the URL at the `URL>` prompt.
-To go back, enter 'b' at the prompt. To quit, enter 'q'.
-To search using gus.guru, enter 's' and then enter your query at the `SEARCH>` prompt.
-To follow a link, enter the link number and press enter.
 
 ### Options
 
