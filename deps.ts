@@ -11,7 +11,9 @@ export {
   inverse,
   italic,
   magenta,
+  red,
   underline,
+  white,
   yellow,
 } from "https://deno.land/std@v0.54.0/fmt/colors.ts";
 export { parse } from "https://deno.land/std@v0.54.0/flags/mod.ts";

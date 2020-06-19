@@ -1,5 +1,5 @@
-import { green, cyan, yellow } from "../deps.ts";
-
+import { cyan, green, red, white, yellow } from "../deps.ts";
+import { magenta } from "https://deno.land/std@0.52.0/fmt/colors.ts";
 export const helpText = `
 ${yellow("USAGE:")}
   merc [URL]
@@ -41,16 +41,28 @@ export const mascot = `                               _---_  _---_
   cyan("spitlo 2020")
 }`;
 
-export const logo =
-  ` __ .  . ____ ____ ____ _  _ ____ _ ____ ____ ____ ____ ___ ____ ___  ______>
-    |\\\/| |___ |__/ |    |  | |__/ | |    |___ |__/ |__|  |  |  | |__] [__
-    L  L |___ L  \\\ |___ |__| L  \\\ | |___ |___ L  \\\ L  |  L  |__| L  _____]
- - -- ----- ---- ---------------------------- ---- -------------- -/-- --- - +`;
+const logoLines = [
+  `__ .  . ____ ____ ____ _  _ ____ _ ____ ____ ____ ____ ___ ____ ___  ______>`,
+  `   |\\\/| |___ |__/ |    |  | |__/ | |    |___ |__/ |__|  |  |  | |__] [__`,
+  `   L  L |___ L  \\\ |___ |__| L  \\\ | |___ |___ L  \\\ L  |  L  |__| L  _____]`,
+  `- -- ----- ---- ---------------------------- ---- -------------- -/-- --- - +`,
+];
+
+const logoColors = [
+  red,
+  magenta,
+  yellow,
+  white,
+];
+
+export const logo = logoLines.map((line, i) => {
+  return ` ${logoColors[i](line)}`;
+}).join("\n");
 
 export const startText = `
 \`\`\`
 ${green(mascot)}
-${yellow(logo)}
+${logo}
 \`\`\`
 
 # Welcome to Mercuriceratops!
