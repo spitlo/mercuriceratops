@@ -3,5 +3,5 @@ set -eu
 
 LEVEL=${1:-patch}
 
-bump $LEVEL
+bump "$LEVEL"
 git push --follow-tags
