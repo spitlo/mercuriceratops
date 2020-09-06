@@ -2,6 +2,9 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": false,
   "files.autoSave": "off",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
   "deno.enable": true,
   "deno.unstable": false,
   "[typescript]": {
