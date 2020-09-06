@@ -2,6 +2,11 @@
 
 This changelog is automatically generated.
 
+## v1.5.2
+
+- Re-enable changelog commit [`b883e55`](../../commit/b883e55b6b1ba394c99c75d7f0ee6759c9bff60e)
+- Make install command easier to copy [`175e99b`](../../commit/175e99b95f2fd7606098f196241696880679b222)
+
 ## v1.5.1
 
 - Simplify bin/changelog [`0aa7648`](../../commit/0aa76483b770dc19fa6f4103ed9e1f0f2f40fa15)
