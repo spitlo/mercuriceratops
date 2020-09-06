@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-LOG_FORMAT="- %s (#%h)"
-
-function write_log() {
-  git log --pretty=format:"$LOG_FORMAT" --no-merges --grep "README.md" --invert-grep "$1" | grep -v "release: " >> CHANGELOG.md
-}
-
 function clear_changelog() {
   if [[ ! -f ./CHANGELOG.md ]]; then
     touch CHANGELOG.md
@@ -26,17 +20,21 @@ function write_changelog() {
   # commits before first tag.
   for tag in $(git tag --sort "-v:refname"); do
     if [ "$N" -gt 0 ]; then
-      # git log --pretty=format:"$LOG_FORMAT" --no-merges --grep "README.md" --invert-grep "$tag...$previous_tag" | grep -v "release: " >> CHANGELOG.md
-      write_log "$tag...$previous_tag"
-      echo -e "\n## $tag\n" >> CHANGELOG.md
+      git log \
+        --pretty=format:"- %s (#%h)" \
+        --no-merges --grep "README.md" \
+        --grep "CHANGELOG.md" \
+        --grep "release: " \
+        --invert-grep \
+        "$tag...$previous_tag" >> CHANGELOG.md
+      echo -e "\n\n## $tag\n" >> CHANGELOG.md
     else
       echo -e "## $tag\n" >> CHANGELOG.md
     fi
     previous_tag="$tag"
     (( N+=1 ))
   done
-  # git log --pretty=format:"$LOG_FORMAT" --no-merges --grep "README.md" --grep "CHANGELOG.md" --invert-grep "$tag..." | grep -v "release: " >> CHANGELOG.md
-  write_log "$tag..."
+  echo "First release" >> CHANGELOG.md
 }
 
 function commit_changelog() {
