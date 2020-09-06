@@ -2,6 +2,15 @@
 
 This changelog is automatically generated.
 
+## v1.5.1
+
+- Simplify bin/changelog (#0aa7648)
+- Include changelog command in bin/publish (#b9c5055)
+- Add script to generate changelog from git commits (#688120e)
+- Typed args (#8b103e5)
+- Change project file settings (#0d58e5b)
+- Update project to use official VS Code extension for formatting (#6eef3a6)
+
 ## v1.5.0
 
 - Don’t fail catastrophically on connection errors (#65b2548)
