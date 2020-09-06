@@ -5,3 +5,6 @@ LEVEL=${1:-patch}
 
 bump "$LEVEL"
 git push --follow-tags
+
+bin/changelog
+git push
