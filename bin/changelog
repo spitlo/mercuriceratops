@@ -21,7 +21,7 @@ function write_changelog() {
   for tag in $(git tag --sort "-v:refname"); do
     if [ "$N" -gt 0 ]; then
       git log \
-        --pretty=format:"- %s (#%h)" \
+        --pretty=format:"- %s [\`%h\`](../../commit/%H)" \
         --no-merges --grep "README.md" \
         --grep "CHANGELOG.md" \
         --grep "release: " \
@@ -39,7 +39,7 @@ function write_changelog() {
 
 function commit_changelog() {
   git add ./CHANGELOG.md
-  git commit -m "Update CHANGELOG.md"
+  # git commit -m "Update CHANGELOG.md"
 }
 
 function main() {
