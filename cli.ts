@@ -1,4 +1,5 @@
 import {
+  Args,
   BufReader,
   Kia,
   TextProtoReader,
@@ -38,7 +39,7 @@ let spinner: any;
 let url: string;
 
 // Parse command line arguments
-const parsedArgs = parse(Deno.args.slice(0), {
+const parsedArgs: Args = parse(Deno.args.slice(0), {
   alias: {
     dump: "d",
     paginate: "p",

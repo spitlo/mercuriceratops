@@ -16,6 +16,6 @@ export {
   white,
   yellow,
 } from "https://deno.land/std@0.68.0/fmt/colors.ts";
-export { parse } from "https://deno.land/std@0.68.0/flags/mod.ts";
+export { Args, parse } from "https://deno.land/std@0.68.0/flags/mod.ts";
 
 export { Kia };
