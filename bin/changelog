@@ -39,7 +39,7 @@ function write_changelog() {
 
 function commit_changelog() {
   git add ./CHANGELOG.md
-  # git commit -m "Update CHANGELOG.md"
+  git commit -m "Update CHANGELOG.md"
 }
 
 function main() {
