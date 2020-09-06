@@ -94,7 +94,8 @@ Connecting to <gemini.circumlunar.space>
 - [x] Deno install (`merc`?)
 - [x] Lock dependency versions
 - [x] Add to deno.land/x
-- [ ] Don’t fail catastrophically on cert errors
+- [x] Don’t fail catastrophically on cert errors
+- [ ] Handle certs better ([See section 4, TLS](https://gemini.circumlunar.space/docs/specification.html))
 - [ ] Word wrap for headers when width is set
 - [ ] Word wrap for link labels when width is set
 - [ ] Implement 'f', forward

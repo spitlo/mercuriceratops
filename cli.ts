@@ -79,6 +79,8 @@ if (parsedArgs.paginate) {
 const tpr = new TextProtoReader(new BufReader(Deno.stdin));
 let line: string | null;
 
+const interactiveMode = !url;
+
 while (true) {
   if (!url) {
     // On first run in interactive mode, show a little welcome message
@@ -158,9 +160,22 @@ while (true) {
   });
   await spinner.start();
 
-  const connection = await Deno.connectTls(
-    { hostname, port: 1965 },
-  );
+  let connection;
+  try {
+    connection = await Deno.connectTls(
+      { hostname, port: 1965 },
+    );
+  } catch (error) {
+    log.warning(`Could not make connection to ${hostname}.`);
+    log.error(error);
+    await spinner.stop();
+    if (interactiveMode) {
+      url = "";
+      continue;
+    } else {
+      break;
+    }
+  }
 
   await connection.write(encoder.encode(`${url}\r\n`));
 
