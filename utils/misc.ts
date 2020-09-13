@@ -26,7 +26,7 @@ export function wordWrap(text: string, width: number): string[] {
   return result;
 }
 
-export function getHostname(url: string = ""): string {
+export function getHostname(url = ""): string {
   const parsedUrl = new URL(url.replace("gemini://", "https://"));
   return parsedUrl.hostname;
 }

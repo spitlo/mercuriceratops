@@ -6,7 +6,8 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "deno.enable": true,
-  "deno.unstable": false,
+  "deno.unstable": true,
+  "deno.lint": true,
   "[typescript]": {
     "editor.defaultFormatter": "denoland.vscode-deno",
   },

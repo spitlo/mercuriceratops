@@ -1,5 +1,4 @@
 import {
-  Args,
   BufReader,
   Kia,
   TextProtoReader,
@@ -9,6 +8,7 @@ import {
   parse,
   yellow,
 } from "./deps.ts";
+import type { Args } from "./deps.ts";
 import { getHostname, spinners } from "./utils/misc.ts";
 import { helpText, startText } from "./utils/texts.ts";
 import { parser } from "./utils/gemini.ts";
@@ -35,8 +35,9 @@ let history: Array<string> = [];
 let links: Array<string> = [];
 let maxLines = DEFAULT_MAX_LINES;
 let page = 1;
-let spinner: any;
+let spinner: Kia;
 let url: string;
+let search: string | null;
 
 // Parse command line arguments
 const parsedArgs: Args = parse(Deno.args.slice(0), {
@@ -98,6 +99,7 @@ while (true) {
         continue;
       case "q":
         Deno.exit();
+        break;
       case "b":
         if (history.length < 2) {
           log.info("No history yet");
@@ -111,7 +113,7 @@ while (true) {
         continue;
       case "s":
         await Deno.stdout.write(encoder.encode("SEARCH> "));
-        const search = await tpr.readLine();
+        search = await tpr.readLine();
         if (search) {
           url = `gemini://gus.guru/search?${encodeURIComponent(search)}`;
         }
