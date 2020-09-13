@@ -33,7 +33,7 @@ function write_changelog() {
     previous_tag="$tag"
     count=$(( "$count" + 1 ))
   done
-  echo "First release" >> CHANGELOG.md
+  echo "- First release" >> CHANGELOG.md
 }
 
 function commit_changelog() {
