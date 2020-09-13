@@ -213,7 +213,7 @@ while (true) {
 
       console.log("\n");
 
-      if (meta === "text/gemini") {
+      if (meta.startsWith("text/gemini")) {
         // This is a gemini document, parse it (get links, markdown)
         let { bodyLinks, formatted, plain } = parser(body, url, width);
         links = bodyLinks.slice(0);
