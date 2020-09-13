@@ -2,6 +2,14 @@
 
 This changelog is automatically generated.
 
+## v1.6.0
+
+- Enable 'deno.lint' for project and fix most complaints [`9d84ee4`](../../commit/9d84ee4ac462d64edf269932527af3578005ca8e)
+- Add TODO items [`8185265`](../../commit/8185265fddccfa324c40919b2a50cc70c5b1245a)
+- Looser check for text/gemini response type (allow for lang flag) [`e4e59cb`](../../commit/e4e59cb22205d842fb0bd7979a19e9255a62c3ef)
+- Make 'First release' line in changelog a bullet point [`9ecfb62`](../../commit/9ecfb6253836f6b674ac7250b163d1565bc9ff00)
+- Tidy up bin/changelog [`f75843e`](../../commit/f75843efeb4e34ba616aa8bc7f39295bffe99668)
+
 ## v1.5.2
 
 - Re-enable changelog commit [`b883e55`](../../commit/b883e55b6b1ba394c99c75d7f0ee6759c9bff60e)
@@ -55,4 +63,4 @@ This changelog is automatically generated.
 
 ## v1.0.0
 
-First release
+- First release
