@@ -2,6 +2,10 @@
 
 This changelog is automatically generated.
 
+## v1.7.0
+
+- Add timeout of 5 sec to connections. Add --verbose flag [`f38d474`](../../commit/f38d474be25b08eac575df9c6a36d785eee97ca1)
+
 ## v1.6.0
 
 - Enable 'deno.lint' for project and fix most complaints [`9d84ee4`](../../commit/9d84ee4ac462d64edf269932527af3578005ca8e)
