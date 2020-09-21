@@ -2,10 +2,12 @@ import {
   BufReader,
   Kia,
   TextProtoReader,
+  TimeoutError,
   blue,
-  magenta,
   log,
+  magenta,
   parse,
+  timeout,
   yellow,
 } from "./deps.ts";
 import type { Args } from "./deps.ts";
@@ -21,14 +23,16 @@ const DEFAULT_MAX_LINES = 50;
 const defaults: {
   dump: boolean;
   paginate: boolean | number;
+  verbose: boolean;
   width: number;
 } = {
   dump: false,
   paginate: false,
+  verbose: false,
   width: 0,
 };
 
-let { dump, paginate, width } = defaults;
+let { dump, paginate, verbose, width } = defaults;
 
 let firstRun = true;
 let history: Array<string> = [];
@@ -44,6 +48,7 @@ const parsedArgs: Args = parse(Deno.args.slice(0), {
   alias: {
     dump: "d",
     paginate: "p",
+    verbose: "V",
     width: "w",
   },
   default: defaults,
@@ -58,6 +63,10 @@ if (parsedArgs.help) {
 
 if (parsedArgs.dump) {
   dump = true;
+}
+
+if (parsedArgs.verbose) {
+  verbose = true;
 }
 
 if (parsedArgs.width) {
@@ -165,13 +174,22 @@ while (true) {
 
   let connection;
   try {
-    connection = await Deno.connectTls(
-      { hostname, port: 1965 },
+    connection = await timeout(
+      Deno.connectTls(
+        { hostname, port: 1965 },
+      ),
+      5000,
     );
   } catch (error) {
-    log.warning(`Could not make connection to ${hostname}.`);
-    log.error(error);
     await spinner.stop();
+    log.warning(`Could not make connection to ${hostname}.`);
+    if (error instanceof TimeoutError) {
+      log.error(
+        `Connection to ${hostname} timed out.`,
+      );
+    } else if (error && verbose) {
+      log.error(error);
+    }
     if (interactiveMode) {
       url = "";
       continue;

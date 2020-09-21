@@ -19,4 +19,6 @@ export {
 export { parse } from "https://deno.land/std@0.68.0/flags/mod.ts";
 export type { Args } from "https://deno.land/std@0.68.0/flags/mod.ts";
 
+export { timeout, TimeoutError } from "https://deno.land/x/timeout@1.0/mod.ts";
+
 export { Kia };
