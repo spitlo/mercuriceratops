@@ -225,6 +225,7 @@ while (true) {
       log.error("Error, sorry. Try again.");
       url = "";
       continue;
+    // deno-lint-ignore no-case-declarations
     case 2:
       if (!meta.startsWith("text/")) {
         log.warning(
