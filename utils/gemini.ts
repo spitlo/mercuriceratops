@@ -24,6 +24,7 @@ export function parser(
   };
 
   let pre = false;
+  let header: string;
   for (let line of body.split("\n")) {
     if (line.startsWith("```")) {
       pre = !pre;
@@ -32,15 +33,26 @@ export function parser(
       result.plain.push(line);
     } else if (line.startsWith("# ")) {
       // Make H1 bold and underlined in interactive mode
-      result.formatted.push(italic(underline(line.substring(2).trim())));
+      header = line.substring(2).trim();
+      result.formatted.push(
+        italic(underline(wordWrap(header, width).join("\n"))),
+      );
       result.plain.push(line);
     } else if (line.startsWith("## ")) {
       // Make H2 bold in interactive mode
-      result.formatted.push("| " + bold(line.substring(3).trim()));
+      header = line.substring(3).trim();
+      result.formatted.push(
+        wordWrap(header, width).map((headerLine) => `| ${bold(headerLine)}`)
+          .join("\n"),
+      );
       result.plain.push(line);
     } else if (line.startsWith("### ")) {
       // Make H3 italic in interactive mode
-      result.formatted.push(":: " + bold(line.substring(4).trim()));
+      header = line.substring(4).trim();
+      result.formatted.push(
+        wordWrap(header, width).map((headerLine) => `:: ${bold(headerLine)}`)
+          .join("\n"),
+      );
       result.plain.push(line);
     } else if (line.startsWith("=>")) {
       line = line.substring(2).trim();

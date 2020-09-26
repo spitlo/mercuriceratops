@@ -102,7 +102,7 @@ Connecting to <gemini.circumlunar.space>
 - [x] Don’t fail catastrophically on cert errors
 - [ ] Handle certs better ([See section 4, TLS](https://gemini.circumlunar.space/docs/specification.html))
 - [x] Add a timeout (and/or the possibility to cancel) when loading a page
-- [ ] Word wrap for headers when width is set
+- [x] Word wrap for headers when width is set
 - [ ] Word wrap for link labels when width is set
 - [ ] Implement 'f', forward
 - [ ] Implement a history tree? (Something like what [Nyxt has](https://github.com/atlas-engineer/nyxt#history-as-a-tree))
