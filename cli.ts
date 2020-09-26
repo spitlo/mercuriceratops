@@ -111,6 +111,9 @@ while (true) {
       case "q":
         Deno.exit();
         break;
+      case "h":
+        console.log(parser(helpText, "", options.width).formatted.join("\n"));
+        continue;
       case "b":
         if (history.length < 2) {
           log.info("No history yet");
