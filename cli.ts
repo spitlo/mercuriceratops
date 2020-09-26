@@ -32,12 +32,9 @@ const defaults: {
   width: 0,
 };
 
-let { dump, paginate, verbose, width } = defaults;
-
 let firstRun = true;
 let history: Array<string> = [];
 let links: Array<string> = [];
-let maxLines = DEFAULT_MAX_LINES;
 let page = 1;
 let spinner: Kia;
 let url: string;
@@ -47,10 +44,12 @@ let search: string | null;
 const parsedArgs: Args = parse(Deno.args.slice(0), {
   alias: {
     dump: "d",
+    help: "h",
     paginate: "p",
     verbose: "V",
     width: "w",
   },
+  boolean: ["d", "dump", "h", "help"],
   default: defaults,
 });
 
@@ -61,30 +60,26 @@ if (parsedArgs.help) {
   url = (parsedArgs._[0] || "").toString();
 }
 
-if (parsedArgs.dump) {
-  dump = true;
-}
-
-if (parsedArgs.verbose) {
-  verbose = true;
-}
-
-if (parsedArgs.width) {
-  if (
-    Number.isInteger(Number(parsedArgs.width))
-  ) {
-    width = Number(parsedArgs.width);
-  }
-}
+const options = {
+  dump: parsedArgs.dump,
+  maxLines: DEFAULT_MAX_LINES,
+  paginate: defaults.paginate,
+  verbose: parsedArgs.verbose,
+  width: defaults.width,
+};
 
 if (parsedArgs.paginate) {
-  paginate = true;
+  options.paginate = true;
   if (
     Number.isInteger(Number(parsedArgs.paginate)) &&
     Number(parsedArgs.paginate) > 1
   ) {
-    maxLines = Number(parsedArgs.paginate);
+    options.maxLines = Number(parsedArgs.paginate);
   }
+}
+
+if (parsedArgs.width && Number.isInteger(Number(parsedArgs.width))) {
+  options.width = Number(parsedArgs.width);
 }
 
 const tpr = new TextProtoReader(new BufReader(Deno.stdin));
@@ -93,11 +88,11 @@ let line: string | null;
 const interactiveMode = !url;
 
 while (true) {
-  if (!url) {
+  if (interactiveMode) {
     // On first run in interactive mode, show a little welcome message
-    if (firstRun && !dump) {
-      console.log(parser(startText, "", width).formatted.join("\n"));
-      links = parser(startText, "", width).bodyLinks;
+    if (firstRun && !options.dump) {
+      console.log(parser(startText, "", options.width).formatted.join("\n"));
+      links = parser(startText, "", options.width).bodyLinks;
       firstRun = false;
     }
 
@@ -170,7 +165,7 @@ while (true) {
     spinner: spinners.bounce,
     text: `Connecting to <${hostname}>`,
   });
-  await spinner.start();
+  spinner.start();
 
   let connection;
   try {
@@ -181,13 +176,13 @@ while (true) {
       5000,
     );
   } catch (error) {
-    await spinner.stop();
+    spinner.stop();
     log.warning(`Could not make connection to ${hostname}.`);
     if (error instanceof TimeoutError) {
       log.error(
         `Connection to ${hostname} timed out.`,
       );
-    } else if (error && verbose) {
+    } else if (error && options.verbose) {
       log.error(error);
     }
     if (interactiveMode) {
@@ -205,7 +200,7 @@ while (true) {
   const [status, meta] = (responseHeader || "4 ").split(/\s/);
   const statusCode = Number(status.substr(0, 1));
 
-  await spinner.stop();
+  spinner.stop();
 
   switch (statusCode) {
     case 1:
@@ -235,17 +230,17 @@ while (true) {
 
       if (meta.startsWith("text/gemini")) {
         // This is a gemini document, parse it (get links, markdown)
-        let { bodyLinks, formatted, plain } = parser(body, url, width);
+        let { bodyLinks, formatted, plain } = parser(body, url, options.width);
         links = bodyLinks.slice(0);
-        if (dump) {
+        if (options.dump) {
           // For dumps, dont mind the page length
           console.log(plain.join("\n"));
         } else {
-          if (!paginate) {
+          if (!options.paginate) {
             console.log(formatted.join("\n"));
           } else {
-            let pages = Math.floor(formatted.length / maxLines);
-            if (formatted.length < maxLines) {
+            let pages = Math.floor(formatted.length / options.maxLines);
+            if (formatted.length < options.maxLines) {
               // This page is shorter than max, just print it.
               console.log(formatted.join("\n"));
             } else {
@@ -253,7 +248,7 @@ while (true) {
               while (formatted.length > 0) {
                 for (
                   let xx = 0;
-                  xx <= maxLines;
+                  xx <= options.maxLines;
                   xx++
                 ) {
                   if (formatted.length > 0) {
@@ -281,8 +276,8 @@ while (true) {
         console.log(body);
       }
 
-      // If dump is reuested, we’re done. Exit successfully
-      if (dump) {
+      // If dump is requested, we’re done. Exit successfully
+      if (options.dump) {
         Deno.exit();
       }
 
