@@ -1,5 +1,5 @@
-import { cyan, green, red, white, yellow } from "../deps.ts";
-import { magenta } from "https://deno.land/std@0.52.0/fmt/colors.ts";
+import { cyan, green, magenta, red, white, yellow } from "../deps.ts";
+
 export const helpText = `
 ${yellow("USAGE:")}
   merc [URL]
