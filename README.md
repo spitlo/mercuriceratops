@@ -110,6 +110,7 @@ Connecting to <gemini.circumlunar.space>
 - [ ] Handle gopher?
 - [ ] Handle downloads?
 - [ ] Handle http(s)?
+- [ ] Add 'h', help, in interactive mode
 
 ---
 
