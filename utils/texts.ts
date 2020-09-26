@@ -10,15 +10,18 @@ ${yellow("USAGE:")}
   To follow a link, enter the link number and press enter.
 
 ${yellow("OPTIONS:")}
-  -h, --help
-      Prints help
   -d, --dump
       Prints document body and exits
-  -w, --width <number>
-      Wraps text at <number> columns
+  -h, --help
+      Prints help
   -p, --paginate <number>
       Show <number> of rows at a time.
       Defaults to 50 if no <number> is supplied.
+  -t, --timeout <number>
+      Seconds to try connecting before timeouting.
+      Defaults to 5.
+  -w, --width <number>
+      Wraps text at <number> columns
 `;
 
 export const mascot = `                               _---_  _---_

@@ -20,6 +20,7 @@ const encoder = new TextEncoder();
 
 // Use an arbitrary number for now, but perhaps check terminal height?
 const DEFAULT_MAX_LINES = 50;
+const DEFAULT_TIMEOUT = 5;
 const defaults: {
   dump: boolean;
   paginate: boolean | number;
@@ -46,6 +47,7 @@ const parsedArgs: Args = parse(Deno.args.slice(0), {
     dump: "d",
     help: "h",
     paginate: "p",
+    timeout: "t",
     verbose: "V",
     width: "w",
   },
@@ -64,6 +66,7 @@ const options = {
   dump: parsedArgs.dump,
   maxLines: DEFAULT_MAX_LINES,
   paginate: defaults.paginate,
+  timeout: DEFAULT_TIMEOUT,
   verbose: parsedArgs.verbose,
   width: defaults.width,
 };
@@ -76,6 +79,10 @@ if (parsedArgs.paginate) {
   ) {
     options.maxLines = Number(parsedArgs.paginate);
   }
+}
+
+if (parsedArgs.timeout && Number.isInteger(Number(parsedArgs.timeout))) {
+  options.timeout = Number(parsedArgs.timeout);
 }
 
 if (parsedArgs.width && Number.isInteger(Number(parsedArgs.width))) {
@@ -163,7 +170,9 @@ while (true) {
   spinner = new Kia({
     color: "yellow",
     spinner: spinners.bounce,
-    text: `Connecting to <${hostname}>`,
+    text: options.verbose
+      ? `Connecting to ${hostname} with a timeout of ${options.timeout} seconds.`
+      : `Connecting to <${hostname}>`,
   });
   spinner.start();
 
@@ -173,7 +182,7 @@ while (true) {
       Deno.connectTls(
         { hostname, port: 1965 },
       ),
-      5000,
+      options.timeout * 1000,
     );
   } catch (error) {
     spinner.stop();
